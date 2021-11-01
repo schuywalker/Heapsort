@@ -9,8 +9,7 @@ public class richBaby {
     public static void main(String[] args) {
 
         //int[] A = new int[10001];
-
-       // int[] A = {0, 16, 7, 10, 8, 14, 16, 16, 16, 16};//for testing purposes.
+        //int[] A = {0, 16, 7, 10, 8, 14, 16, 16, 16, 16};//for testing purposes.
         int[] A = {0,1,2,3,4,5};//for testing purposes.
 //        File file = new File(args[0]);
 //        try {
@@ -23,22 +22,25 @@ public class richBaby {
 //                playA[numsScanned] = newNum;
 //            }
 
-        maxHeap.printA(A);
+        MaxHeap heap = new MaxHeap(A);
+
+
+        heap.printA();
         //convert array into a maxheap
         //maxHeap.Build_Max_Heap(playA);
 //        maxHeap.Max_Heapify(A, 4);
 //        maxHeap.Max_Heapify(A, 3);
 //        maxHeap.Max_Heapify(A, 2);
         //maxHeap.Max_Heapify(A, 9);
-        maxHeap.Build_Max_Heap(A);
+        heap.Build_Max_Heap();
 
 
         System.out.println("after");
-        maxHeap.printA(A);
+        heap.printA();
 
         System.out.println("after");
-        maxHeap.Heapsort(A);
-        maxHeap.printA(A);
+        heap.heapsort();
+        heap.printA();
 
 
 //

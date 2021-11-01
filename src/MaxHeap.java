@@ -1,36 +1,40 @@
 
 
-public class maxHeap {
+public class MaxHeap {
 
     public int[] A;
-    public static int heap_size;
+    public int heap_size;
     // will rebuild in a non-static context using heap_size instead of getHeap_Size
 
-    public static void Heapsort(int[] A){
-        int heap_size = A.length-1;
+    public MaxHeap(int[] A){
+        this.A = A;
+        this.heap_size = A.length-1;
 
-        Build_Max_Heap(A);
-        for (int i = A.length-1; i >= 2; i--){
-            swap(A,1,heap_size);
+    }
+
+    public void heapsort(){
+        Build_Max_Heap();
+        for (int i = A.length-1; i > 1; i--){
+            swap(1, i);
             heap_size--;
-            Max_Heapify(A, 1);
+            Max_Heapify(1);
         }
     }
 
 
-    
 
-    public static void Build_Max_Heap(int[] A){
+
+    public void Build_Max_Heap(){
         heap_size = A.length-1;
         for(int i = (int)Math.floor((A.length-1)/2); i > 0; i--){
             //from lowest, rightmost non-leaf node, down to root
             //Max_Heapify requires that children both be Max_Heaps, so we work from lowest parent to highest
-            Max_Heapify(A, i);
+            Max_Heapify(i);
         }
 
     }
 
-    public static void Max_Heapify(int[] A, int i){
+    public void Max_Heapify(int i){
         //children of A[i] are both max-heaps
         //max-heap means when each node looks down, both it's children are smaller
         //not necessarily sorted
@@ -52,14 +56,14 @@ Work on A[i]:
 
     if (i >= A.length) throw new IllegalArgumentException("i cannot be greater than array size");
 
-    if(isLeafNode(A,i)){
+    if(isLeafNode(i)){
         return; //if i is leaf node
     }
 
     int largestNode;
 
-    int leftChildIndex = getLeftChildIndex(A, i);//i is seatNum
-    int rightChildIndex = getRightChildIndex(A, i);
+    int leftChildIndex = getLeftChildIndex(i);//i is seatNum
+    int rightChildIndex = getRightChildIndex(i);
 
     if (rightChildIndex != -1 && A[i] < A[rightChildIndex]){
         largestNode = rightChildIndex;//if right child bigger, pointer moves to right child
@@ -76,10 +80,10 @@ Work on A[i]:
         // of course if its a leaf node, then this is not necessary. leaf node seatNum will be >= floor(heapsize/2) (because nodes at each level double everytime)
     if (largestNode != i){
 
-        swap(A,largestNode,i);
+        swap(largestNode,i);
 
         //heap may be damaged. repair
-            Max_Heapify(A, largestNode);
+            Max_Heapify(largestNode);
 
 
 
@@ -89,13 +93,13 @@ Work on A[i]:
 
     }
 
-    public static void swap(int[] A, int idx, int idx2){
+    public void swap(int idx, int idx2){
         int temp = A[idx];
         A[idx] = A[idx2];
         A[idx2] = temp;
     }
 
-    public static int getLeftChildIndex(int[] A, int SeatNum){
+    public int getLeftChildIndex(int SeatNum){
         int ret = SeatNum*2;
         if (ret > getHeap_size(A)) {//heap_size is array index -1, adjusts for A index 0
             return -1;
@@ -103,7 +107,7 @@ Work on A[i]:
         //Seat number is actually just the array index location;
         else return SeatNum*2;
     }
-    public static int getRightChildIndex(int[] A, int SeatNum){
+    public int getRightChildIndex(int SeatNum){
         int ret = SeatNum*2 + 1;
         if (ret > getHeap_size(A)) { //heap_size is array index -1, adjusts for A index 0
             return -1;
@@ -115,24 +119,24 @@ Work on A[i]:
         return (int)Math.floor(SeatNum/2);
     }
 
-    public static void printA(int[] A){
+    public void printA(){
         for (int i=1; i < A.length; i++){
             System.out.print(A[i]+", ");
         }
         System.out.println();
     }
 
-    public static boolean isLeafNode(int[] A, int i){
+    public boolean isLeafNode(int i){
 //        if(i > ((int)((A.length-1)/2))){ //-1 adjusts for A index 0
-        if(i > (maxHeap.heap_size/2)){ //-1 adjusts for A index 0
+        if(i > (this.heap_size/2)){ //-1 adjusts for A index 0
             return true;
         }
         else return false;
     }
 
-    public static int getHeap_size(int[] A){
+    public int getHeap_size(int[] A){
 //        return A.length-1;
-        return maxHeap.heap_size;
+        return this.heap_size;
     }
 
     //not currently using this method
